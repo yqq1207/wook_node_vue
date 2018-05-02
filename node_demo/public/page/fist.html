@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新闻列表</title>
+		<script src="../javascripts/jquery-1.11.0.min.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			
+			<p class="getData"></p>
+			<p class="postData">
+			</p>
+		</div>
+		<script>
+			const urlIndex = 'http://192.168.0.7:9051';
+			function sendJquery(url, data, method, traditional, callback){
+			    $.ajax({
+			        type: method,
+			        url: urlIndex +url,
+			        data: data,
+			        traditional: traditional,
+			        success: function(data){
+			            callback && callback(data);
+			        }
+			    })
+			}
+			var obj = {
+				name:'fistIndex'
+			};
+			
+			//加载数据
+			sendJquery('/postChange', obj, 'POST', true, function (data) {
+                if (data) {
+                    $('.postData').text(JSON.stringify(data));
+                }
+           	});
+//         	加载数据
+			sendJquery('/ex',null,"GET",true,function(data){
+				if(data){
+					$('.getData').text(data)
+				}
+			})
+		</script>
+	</body>
+</html>
